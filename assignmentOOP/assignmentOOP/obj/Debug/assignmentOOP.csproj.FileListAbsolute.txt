@@ -1,0 +1,17 @@
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.exe.config
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.exe
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.pdb
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csprojAssemblyReference.cache
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.Properties.Resources.resources
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.GenerateResource.cache
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CoreCompileInputs.cache
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.exe
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.pdb
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantBus.dll
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantDAL.dll
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity.dll
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantBus.pdb
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantDAL.pdb
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity.pdb
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CopyComplete
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmAdmin.resources

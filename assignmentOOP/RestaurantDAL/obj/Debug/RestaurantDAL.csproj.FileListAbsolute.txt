@@ -1,0 +1,9 @@
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csprojAssemblyReference.cache
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csproj.CoreCompileInputs.cache
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantDAL.dll
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantDAL.pdb
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantEntity.dll
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantEntity.pdb
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csproj.CopyComplete
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.dll
+C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.pdb

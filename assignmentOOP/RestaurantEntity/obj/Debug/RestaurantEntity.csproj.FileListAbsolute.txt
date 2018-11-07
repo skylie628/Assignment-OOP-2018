@@ -1,0 +1,6 @@
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\bin\Debug\RestaurantEntity.dll
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\bin\Debug\RestaurantEntity.pdb
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\obj\Debug\RestaurantEntity.csprojAssemblyReference.cache
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\obj\Debug\RestaurantEntity.csproj.CoreCompileInputs.cache
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\obj\Debug\RestaurantEntity.dll
+C:\Users\skylie\Documents\assignmentOOP\RestaurantEntity\obj\Debug\RestaurantEntity.pdb
