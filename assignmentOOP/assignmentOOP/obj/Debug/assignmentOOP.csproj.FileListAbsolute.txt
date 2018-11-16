@@ -15,3 +15,4 @@ C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantDAL.pd
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity.pdb
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CopyComplete
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmAdmin.resources
+C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmStaff.resources

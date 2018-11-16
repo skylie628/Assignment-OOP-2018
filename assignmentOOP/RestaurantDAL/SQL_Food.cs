@@ -26,6 +26,9 @@ namespace RestaurantDAL
         {
             return cn.GetDataTable("Select * from FOOD " + DieuKien);
         }
-
+        public string GetValue(String condition, int i)
+        {
+            return cn.GetValue("Select * from FOOD " + condition, i);
+        }
     }
 }
