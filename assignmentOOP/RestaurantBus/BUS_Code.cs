@@ -6,23 +6,22 @@ using System.Threading.Tasks;
 using System.Data;
 using RestaurantDAL;
 using RestaurantEntity;
-
 namespace RestaurantBus
 {
-    public class BUS_Customer
+    public class BUS_Code
     {
-        SQL_Customer sql = new SQL_Customer();
-        public void AddCustomer(EC_Customer et)
+        SQL_Code sql = new SQL_Code();
+        public void AddCode(EC_CODE et)
         {
-            sql.AddCustomer(et);
+            sql.AddCode(et);
         }
-        public void UpdateCustomer(EC_Customer et)
+        public void UpdateCode(EC_CODE et)
         {
-            sql.UpdateCustomer(et);
+            sql.UpdateCode(et);
         }
-        public void DeleteCustomer(EC_Customer et)
+        public void DeleteCode(EC_CODE et)
         {
-            sql.DeleteCustomer(et);
+            sql.DeleteCode(et);
         }
         public DataTable CreateData(string DieuKien)
         {

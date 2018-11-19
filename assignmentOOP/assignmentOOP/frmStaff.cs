@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Drawing.Printing;
 using System.Data.SqlClient;
+using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using RestaurantBus;
 using RestaurantDAL;
@@ -33,6 +35,8 @@ namespace assignmentOOP
         BUS_Food busFood = new BUS_Food();
         EC_Customer etCus = new EC_Customer();
         BUS_Customer busCus = new BUS_Customer();
+        EC_CODE etCode = new EC_CODE();
+        BUS_Code busCode = new BUS_Code();
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
         }
@@ -54,6 +58,7 @@ namespace assignmentOOP
                 Seat.Text = "Bàn " + dt.Rows[i][0];
                 Seat.Name = "btnSeat" + dt.Rows[i][0];
                 Seat.Name = dt.Rows[i][0] + "";
+                Seat.Size = new Size(50, 50);
                 Seat.FlatAppearance.BorderSize = 0;
                 Seat.Click += new EventHandler(Seat_Click);
                 Seat.DragEnter += new DragEventHandler(Seat_DragEnter);
@@ -74,6 +79,7 @@ namespace assignmentOOP
             setEnable();
             setNulladd();
             txtSeat.Text = button.Name;
+            RefreshForm();
         }
        protected void Seat_MouseDown(object sender, EventArgs e)
         {
@@ -95,6 +101,7 @@ namespace assignmentOOP
                 setEnable();
                 setNulladd();
                 txtSeat.Text = button.Name;
+                RefreshForm();
             }
             else
             {
@@ -141,7 +148,6 @@ namespace assignmentOOP
             dt.Columns.RemoveAt(2);
             dgvFood.DataSource = dt;
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             DataTable dt = busFood.CreateData("where contains (Name,N'" + txtSearchFood.Text + "')");
@@ -168,8 +174,6 @@ namespace assignmentOOP
         }
         void setDisable()
         {
-            btnCombine.Enabled = false;
-            btnChange.Enabled = false;
             btnbook.Enabled = false;
             btnPrintbill.Enabled = false;
             btnDelete.Enabled = false;
@@ -184,7 +188,6 @@ namespace assignmentOOP
         }
         void setEnable()
         {
-            btnCombine.Enabled = true;
             btnbook.Enabled = true;
             btnPrintbill.Enabled = true;
             btnDelete.Enabled = true;
@@ -253,8 +256,14 @@ namespace assignmentOOP
         private void txtmember_TextChanged(object sender, EventArgs e)
         {
             DataTable dt = busCus.CreateData("where PhoneNumber=N'" + txtmember.Text + "'");
-            if (dt.Rows.Count < 1) { txtmember.BackColor = Color.Red; }
-            else { txtmember.BackColor = Color.BlueViolet; }
+            if (dt.Rows.Count < 1) {
+                txtmember.BackColor = Color.Red;
+                txtmember.Tag = 0+"";
+            }
+            else {
+                txtmember.BackColor = Color.BlueViolet;
+                txtmember.Tag = 1+"";
+            }
         }
 
         private void cbMember_CheckedChanged(object sender, EventArgs e)
@@ -328,17 +337,70 @@ namespace assignmentOOP
             }
             else { MessageBox.Show("Bàn đang có người"); }
         }
-
+        double outprice=0;
         private void btnPrintbill_Click(object sender, EventArgs e)
         {
+            // update bill vao csdl sau khi thanh toan
             string table = txtSeat.Text;
             etBill.Id = getIDbillfromTable(table);
             DateTime datevalue = DateTime.Now;
             etBill.DateBill = datevalue.ToString("MM-dd-yyyy HH:mm:ss");
             etBill.IdTable = txtSeat.Text;
+            if(cbMember.Checked == true)
+            {
+                
+                if((txtmember.Tag+"") == "1" )
+                {
+                    etBill.IdMember = busCus.GetValue("where PhoneNumber=N'" + txtmember.Text + "'", 0);
+                }
+                else { MessageBox.Show("Bạn đã nhập sai thông tin thành viên!");
+                    return;
+                }
+            }
+            else
+            {
+                etBill.IdMember = "";
+            }
             etBill.Status = 1+"";
+            etBill.TotalPrice = outprice;
             busBill.UpdateBill(etBill);
-            showTable();
+            //update thong tin thanh vien vao csdl sau khi thanh toan
+            if (cbDiscount.SelectedIndex != 0 && cbMember.Checked && (txtmember.Tag + "") == "1")
+            {
+                DataTable dt = busCus.CreateData("where PhoneNumber =N'" + txtmember.Text + "'");
+                etCus.Id = dt.Rows[0][0]+"";
+                etCus.Name = dt.Rows[0][1]+"";
+                etCus.Phone = dt.Rows[0][4] + "";
+                DateTime d = Convert.ToDateTime(dt.Rows[0][2]+"");
+                string s1 = d.ToString("yyy-MM-dd");
+                etCus.DOB = s1;
+                etCus.Sex = dt.Rows[0][3]+"";
+                etCus.Point = int.Parse(dt.Rows[0][5] + "")+ Convert.ToInt32(outprice/1000) ;
+                MessageBox.Show(etCus.Phone + "  " + etCus.Point);
+                busCus.UpdateCustomer(etCus);
+            }
+            {
+               
+            }
+            try
+            {
+                PrintDialog _PrintDialog = new PrintDialog();
+                PrintDocument _PrintDocument = new PrintDocument();
+                _PrintDialog.Document = _PrintDocument; //add the document to the dialog box
+                _PrintDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(CreateReceipt); //add an event handler that will do the printing
+                //on a till you will not want to ask the user where to print but this is fine for the test envoironment.
+                //DialogResult result = _PrintDialog.ShowDialog();
+
+                //if (result == DialogResult.OK)
+                {
+                    _PrintDocument.Print();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            RefreshForm();
         }
        
         private void txtSeat_TextChanged(object sender, EventArgs e)
@@ -351,6 +413,8 @@ namespace assignmentOOP
             }
         }
         void showSelectedFood() {
+            dgvFoodSelected.Rows.Clear();
+            dgvFoodSelected.Refresh();
             string table = txtSeat.Text;
             string IDBill = getIDbillfromTable(table);
             DataTable dt = busBillInfo.CreateData("where IDBill= N'" + IDBill + "'");
@@ -368,18 +432,55 @@ namespace assignmentOOP
             }
             updatePrice();
         }
+        double SumPrice()
+        {
+            try
+            {
+                double price = 0;
+                for (int i = 0; i < dgvFoodSelected.Rows.Count; i++)
+                {
+                    DataGridViewRow dvr = dgvFoodSelected.Rows[i];
+                    price += Convert.ToDouble(dvr.Cells[1].Value) * Convert.ToDouble(dvr.Cells[2].Value);
+                }
+                return price;
+            }
+            catch {
+                return 0;
+            }
+        }
         void updatePrice()
         {
-            double price = 0;
-            for(int i = 0; i < dgvFoodSelected.Rows.Count; i++)
+            double price = SumPrice();
+            double totalPrice = price;
+            switch (cbDiscount.SelectedIndex)
             {
-                DataGridViewRow dvr = dgvFoodSelected.Rows[i];
-                price += Convert.ToDouble(dvr.Cells[1].Value) * Convert.ToDouble(dvr.Cells[2].Value);
-                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
-                decimal value = decimal.Parse(Convert.ToString(price), System.Globalization.NumberStyles.AllowThousands);
-                txtSum.Text = String.Format(culture, "{0:N0}", value);
-                txtSum.Select(txtSum.Text.Length, 0);
+                case 1:
+                    {
+                        if ((txtDiscount.Tag + "") == "1")
+                        {
+                            string s = busCode.GetValue("where NameCode=N'" + txtDiscount.Text + "'", 2);
+                            totalPrice -=  price*Convert.ToDouble(s)/100;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nhập không đúng code!");
+                        }
+                        break;
+                    }
+                case 0:
+                    {
+                        totalPrice = price;
+                        break;
+                    }
             }
+            outprice = totalPrice;
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+            decimal value = decimal.Parse(Convert.ToString(price), System.Globalization.NumberStyles.AllowThousands);
+            txtSum.Text = String.Format(culture, "{0:N0}", value);
+            txtSum.Select(txtSum.Text.Length, 0);
+            decimal value1 = decimal.Parse(Convert.ToString(totalPrice), System.Globalization.NumberStyles.AllowThousands);
+            txtTotalAmont.Text = String.Format(culture, "{0:N0}", value1);
+            txtTotalAmont.Select(txtTotalAmont.Text.Length, 0);
         }
 
         private void btnbook_DragDrop(object sender, DragEventArgs e)
@@ -433,10 +534,148 @@ namespace assignmentOOP
             DateTime d = Convert.ToDateTime(dt.Rows[0][1]);
             string s1 = d.ToString("MM-dd-yyyy HH:mm:ss");
             etBill.DateBill = s1;
+            etBill.TotalPrice = 0;
             busBill.UpdateBill(etBill);
             MessageBox.Show(etBill.Id + " " + etBill.IdTable + " " + etBill.Status + " " + etBill.DateBill);
             showTable();
             showSelectedFood();
         }
+
+        private void flpSeat_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtDiscount_TextChanged(object sender, EventArgs e)
+        {
+                DataTable dt = busCode.CreateData("where NameCode=N'" + txtDiscount.Text + "' and Status = 1");
+                if (dt.Rows.Count < 1)
+                {
+                    txtDiscount.BackColor = Color.Red;
+                    txtDiscount.Tag = 0 + "";
+                }
+                else
+                {
+                    txtDiscount.BackColor = Color.BlueViolet;
+                    txtDiscount.Tag = 1 + "";
+                    updatePrice();
+                }
+        }
+        private void RefreshForm()
+        {
+            showTable();
+            showSelectedFood();
+            updatePrice();
+            txtDiscount.Enabled = false;
+            txtmember.Enabled = false;
+            cmbnumber.SelectedIndex = 0;
+            txtNote.Text = "";
+            txtSearchFood.Text = "";
+            DataTable dt = busFood.CreateData("");
+            dt.Columns.RemoveAt(0);
+            dt.Columns.RemoveAt(2);
+            dgvFood.DataSource = dt;
+        }
+        private void cbDiscount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbDiscount.SelectedIndex == 0) {
+                txtDiscount.Enabled = false;
+                txtDiscount.BackColor = Color.White;
+                txtDiscount.Text = "";
+                updatePrice();
+            }
+            else txtDiscount.Enabled = true;
+        }
+
+        private void panel_Paint(object sender, PaintEventArgs e)
+        {
+
+
+        }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            this.AutoSize = true;
+        }
+
+        private void CreateReceipt(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics graphic = e.Graphics;
+            Font font = new Font("Courier New", 12);
+            float FontHeight = font.GetHeight();
+            int startX = 10;
+            int startY = 10;
+            int offset = 40;
+            graphic.DrawString("Restaurant Name", new Font("Courier New", 18), new SolidBrush(Color.Black), startX, startY);
+            string top = "Tên Mặt Hàng".PadRight(24) + "Số lượng".PadRight(24)+"Giá";
+            graphic.DrawString(top, font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset = offset + (int)FontHeight; //make the spacing consistent
+            graphic.DrawString("-----------------------------------------------------", font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset = offset + (int)FontHeight + 5; //make the spacing consistent
+
+            int index = 0;
+            for(index=0;index< dgvFoodSelected.Rows.Count;index++)
+            {
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[0].Value+"", font, new SolidBrush(Color.Black), startX, startY + offset);
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[1].Value + "", font, new SolidBrush(Color.Black), startX+250, startY + offset);
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[2].Value + "", font, new SolidBrush(Color.Black), startX + 500, startY + offset);
+                offset = offset + (int)FontHeight + 5; //make the spacing consistent              
+            }
+
+            offset = offset + 20; //make some room so that the total stands out.
+            graphic.DrawString("Tổng tiền ".PadRight(48) + String.Format("{0:c}", outprice), new Font("Courier New", 12, FontStyle.Bold), new SolidBrush(Color.Black), startX, startY + offset);
+
+            offset = offset + 35; //make some room so that the total stands out.
+         
+            graphic.DrawString("                 Kính chào quý khách", font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset = offset + 20;
+            graphic.DrawString("                     Hẹn gặp lại!", font, new SolidBrush(Color.Black), startX, startY + offset);
+        }
+
+        private void btnprintfood_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PrintDialog _PrintDialog = new PrintDialog();
+                PrintDocument _PrintDocument = new PrintDocument();
+                _PrintDialog.Document = _PrintDocument; //add the document to the dialog box
+                _PrintDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(CreateReceiptCook); //add an event handler that will do the printing
+                //on a till you will not want to ask the user where to print but this is fine for the test envoironment.
+                //DialogResult result = _PrintDialog.ShowDialog();
+
+                //if (result == DialogResult.OK)
+                {
+                    _PrintDocument.Print();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        private void CreateReceiptCook(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Graphics graphic = e.Graphics;
+            Font font = new Font("Courier New", 12);
+            float FontHeight = font.GetHeight();
+            int startX = 10;
+            int startY = 10;
+            int offset = 40;
+            graphic.DrawString("Restaurant Name", new Font("Courier New", 18), new SolidBrush(Color.Black), startX, startY);
+            string top = "Tên Mặt Hàng".PadRight(24) + "Số lượng".PadRight(24) + "Ghi chú";
+            graphic.DrawString(top, font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset = offset + (int)FontHeight; //make the spacing consistent
+            graphic.DrawString("-----------------------------------------------------", font, new SolidBrush(Color.Black), startX, startY + offset);
+            offset = offset + (int)FontHeight + 5; //make the spacing consistent
+
+            int index = 0;
+            for (index = 0; index < dgvFoodSelected.Rows.Count; index++)
+            {
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[0].Value + "", font, new SolidBrush(Color.Black), startX, startY + offset);
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[1].Value + "", font, new SolidBrush(Color.Black), startX + 250, startY + offset);
+                graphic.DrawString(dgvFoodSelected.Rows[index].Cells[3].Value + "", font, new SolidBrush(Color.Black), startX + 500, startY + offset);
+                offset = offset + (int)FontHeight + 5; //make the spacing consistent              
+            }
+        }
+
     }
 }

@@ -16,7 +16,7 @@ namespace RestaurantDAL
         }
         public void UpdateBill(EC_Bill et)
         {
-            cn.ImplementSQL(@"UPDATE BILL SET DateBill = N'"+et.DateBill+"', IDTable = N'"+et.IdTable+"', Status= N'"+int.Parse(et.Status)+"' where ID=N'"+et.Id+"'");
+            cn.ImplementSQL(@"UPDATE BILL SET DateBill = N'"+et.DateBill+"', IDTable = N'"+et.IdTable+"', Status= N'"+int.Parse(et.Status)+"', IDMember =N'"+ et.IdMember+"', TotalPrice =N'"+et.TotalPrice+"' where ID=N'"+et.Id+"'");
         }
         public void DeleteBill(EC_Bill et)
         {

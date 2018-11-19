@@ -53,6 +53,7 @@
     <Compile Include="KetNoiDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQL_Bill.cs" />
+    <Compile Include="SQL_Code.cs" />
     <Compile Include="SQL_Food.cs" />
     <Compile Include="SQL_FoodCate.cs" />
     <Compile Include="SQL_Member.cs" />

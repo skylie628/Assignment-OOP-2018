@@ -48,6 +48,7 @@
     <Compile Include="EC_Account.cs" />
     <Compile Include="EC_Bill.cs" />
     <Compile Include="EC_BillInfo.cs" />
+    <Compile Include="EC_CODE.cs" />
     <Compile Include="EC_Customer.cs" />
     <Compile Include="EC_Food.cs" />
     <Compile Include="EC_FoodCatgory.cs" />

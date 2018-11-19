@@ -53,6 +53,7 @@
     <Compile Include="BUS_Account.cs" />
     <Compile Include="BUS_BILL.cs" />
     <Compile Include="BUS_BillInfo.cs" />
+    <Compile Include="BUS_Code.cs" />
     <Compile Include="BUS_Customer.cs" />
     <Compile Include="BUS_Food.cs" />
     <Compile Include="BUS_FoodCate.cs" />

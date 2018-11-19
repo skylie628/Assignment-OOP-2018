@@ -25,7 +25,14 @@ namespace assignmentOOP
         SqlConnection conn = null;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if(cbStatistic.SelectedIndex == 3) {
+                dtpStatistic1.Enabled = true;
+                dtpStatistic2.Enabled = true;
+            }
+            else{
+                dtpStatistic1.Enabled = false;
+                dtpStatistic2.Enabled = false;
+            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -36,28 +43,6 @@ namespace assignmentOOP
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-            if (conn == null)
-            {
-                conn = new SqlConnection(strConn);
-            }
-            if (conn.State == ConnectionState.Closed)
-            {
-                conn.Open();
-            }
-            SqlCommand command = new SqlCommand();
-            command.CommandType = CommandType.Text;
-            command.CommandText = "Select * from BILL";
-            command.Connection = conn;
-            SqlDataReader reader = command.ExecuteReader();
-            lvCountant.Items.Clear();
-            while (reader.Read())
-            {
-                ListViewItem lvi = new ListViewItem(reader.GetInt32(0) + "");
-                lvi.SubItems.Add(reader.GetString(2));
-                lvi.SubItems.Add(reader.GetInt32(3) + "");
-                lvCountant.Items.Add(lvi);
-            }
-            reader.Close();
         }
 
         //================================================================================//
@@ -67,6 +52,13 @@ namespace assignmentOOP
         void LockTableControl()
         {
             txtSeatNumber.Enabled = false;
+            btnSeatAdd.Enabled = true;
+            btnSeatDelete.Enabled = false;
+            btnSeatSave.Enabled = true;
+        }
+        void UnlockTableControl()
+        {
+            txtSeatNumber.Enabled = true;
             btnSeatAdd.Enabled = true;
             btnSeatDelete.Enabled = true;
             btnSeatSave.Enabled = true;
@@ -79,6 +71,7 @@ namespace assignmentOOP
             for (int i = 0; i < count; i++)
             {
                 Button Seat = new Button();
+                Seat.Size = new Size(50, 50);
                 Seat.Text = "Bàn " + dt.Rows[i][0];
                 Seat.Name = dt.Rows[i][0] + "";
                 Seat.Click += new EventHandler(Seat_Click);
@@ -87,6 +80,7 @@ namespace assignmentOOP
         }
         protected void Seat_Click(object sender, EventArgs e)
         {
+            UnlockTableControl();
             Button button = sender as Button;
             txtSeatNumber.Text = button.Name;
         }
@@ -126,12 +120,13 @@ namespace assignmentOOP
                 busTable.DeleteTableFood(etTable);
                 ShowTable();
             }
-            catch {
+            catch
+            {
                 MessageBox.Show("Không thể thêm bàn");
             }
         }
 
-        
+
         private void btnFoodLoad_Click(object sender, EventArgs e)
         {
         }
@@ -163,7 +158,7 @@ namespace assignmentOOP
              }
              else return 0;
          } */
-      
+
 
         private void cmbCat_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -230,24 +225,31 @@ namespace assignmentOOP
                 CmbFoodCateFill();
                 ShowFood("");
             }
+            else if (tcAdmin.SelectedIndex == 6)
+            {
+                ShowCode();
+                LockCodeControl();
+            }
         }
 
         void LockFoodCateControl()
         {
+            txtFoodCateID.Text = "";
+            txtFoodCateName.Text = "";
             txtFoodCateID.Enabled = false;
             txtFoodCateName.Enabled = false;
             btnFoodcateAdd.Enabled = true;
-            btnFoodCateDelete.Enabled = true;
-            btnFoodCateEdit.Enabled = true;
+            btnFoodCateDelete.Enabled = false;
+            btnFoodCateEdit.Enabled = false;
             btnFoodCateSave.Enabled = false;
         }
         void UnlockFoodCateControl()
         {
-            txtFoodCateID.Enabled = true;
+            txtFoodCateID.Enabled = false;
             txtFoodCateName.Enabled = true;
             btnFoodcateAdd.Enabled = true;
-            btnFoodCateDelete.Enabled = false;
-            btnFoodCateEdit.Enabled = false;
+            btnFoodCateDelete.Enabled = true;
+            btnFoodCateEdit.Enabled = true;
             btnFoodCateSave.Enabled = true;
         }
         string SetIdFoodCate()
@@ -308,18 +310,35 @@ namespace assignmentOOP
 
         private void btnFoodCateDelete_Click(object sender, EventArgs e)
         {
-            try {
-                etFoodCate.Id = txtFoodCateID.Text;
 
-                busFoodCate.DeleteFoodCate(etFoodCate);
-                MessageBox.Show("Đã xóa thành công");
-                LockFoodCateControl();
-                setNullFoodCate();
-                ShowFoodCate();
+            etFoodCate.Id = txtFoodCateID.Text;
+            DataTable dt = busFood.CreateData("where ID_CATEGORY =N'" + etFoodCate.Id + "'");
+            if (dt.Rows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Bạn có muốn xóa các mặt hàng tương ứng ? ", "Confirmation", MessageBoxButtons.YesNoCancel);
+                if (result == DialogResult.Yes)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        etFood.Id = dt.Rows[i][0] + "";
+                        busFood.DeleteFood(etFood);
+                    }
+                }
+                else if (result == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    return;
+                }
             }
-            catch {
-                MessageBox.Show("Lỗi không thể xóa");
-            }
+            busFoodCate.DeleteFoodCate(etFoodCate);
+            MessageBox.Show("Đã xóa thành công");
+            LockFoodCateControl();
+            setNullFoodCate();
+            ShowFoodCate();
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -375,11 +394,17 @@ namespace assignmentOOP
 
         private void dgFoodCate_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            LockFoodCateControl();
-            DataGridViewRow dv = dgFoodCate.Rows[e.RowIndex];
-            txtFoodCateID.Text = dv.Cells[0].Value + "";
-            txtFoodCateName.Text = dv.Cells[1].Value + "";
-
+            try
+            {
+                UnlockFoodCateControl();
+                DataGridViewRow dv = dgFoodCate.Rows[e.RowIndex];
+                txtFoodCateID.Text = dv.Cells[0].Value + "";
+                txtFoodCateName.Text = dv.Cells[1].Value + "";
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi ABCXYZ");
+            }
         }
 
         private void splitContainer4_Panel2_Paint(object sender, PaintEventArgs e)
@@ -396,10 +421,17 @@ namespace assignmentOOP
         }
         void LockUpdateCustomer()
         {
+            txtNameMember.Text = "";
+            txtPhoneMember.Text = "";
+            txtIdMember.Enabled = false;
             txtNameMember.Enabled = false;
             txtPhoneMember.Enabled = false;
-            btnCustomerSave.Enabled = false;
+            btnCustomerSave.Enabled = true;
+            btnEditMember.Enabled = false;
+            btnDeleteMember.Enabled = false;
+            btnAddMember.Enabled = true;
         }
+
         void UnlockFilerCustomer()
         {
             txtMemberSearch.Enabled = true;
@@ -408,7 +440,10 @@ namespace assignmentOOP
         {
             txtNameMember.Enabled = true;
             txtPhoneMember.Enabled = true;
+            btnDeleteMember.Enabled = true;
             btnCustomerSave.Enabled = true;
+            btnEditMember.Enabled = true;
+            btnAddMember.Enabled = true;
         }
         void ShowCustomer(string condition)
         {
@@ -417,7 +452,7 @@ namespace assignmentOOP
         string SetIdCustomer()
         {
             DataTable dt = busCustomer.CreateData("");
-            if (dt.Rows.Count < 1) return "CUS0000";
+            if (dt.Rows.Count < 1) return "CUS00000";
             else
             {
                 string s = Convert.ToString(dt.Rows[dt.Rows.Count - 1][0]);
@@ -578,7 +613,7 @@ namespace assignmentOOP
             {
                 string s = Convert.ToString(dt.Rows[dt.Rows.Count - 1][0]);
                 int id = Convert.ToInt32(s.Remove(0, 3)) + 1;
-                if (id < 10) return "STA0000" + id;
+                if (id < 10) return "STA000" + id;
                 else if (id < 100) return "STA00" + id;
                 else if (id < 1000) return "STA0" + id;
                 else return "STA" + id;
@@ -734,7 +769,7 @@ namespace assignmentOOP
         string SetIdFood()
         {
             DataTable dt = busFood.CreateData("");
-            if (dt.Rows.Count < 1) return "FO00";
+            if (dt.Rows.Count < 1) return "FO000";
             else
             {
                 string s = Convert.ToString(dt.Rows[dt.Rows.Count - 1][0]);
@@ -770,7 +805,7 @@ namespace assignmentOOP
             dgvFood.Rows.Clear();
             dgvFood.Refresh();
             DataTable dt = busFood.CreateData(conn);
-            for(int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataGridViewRow dvr = new DataGridViewRow();
                 dvr.CreateCells(dgvFood);
@@ -778,7 +813,7 @@ namespace assignmentOOP
                 dvr.Cells[1].Value = dt.Rows[i][1] + "";
                 dvr.Cells[2].Value = dt.Rows[i][2] + "";
                 string temp = dt.Rows[i][3].ToString();
-                dvr.Cells[3].Value= busFoodCate.GetValue("where ID= N'" + temp + "'", 1);
+                dvr.Cells[3].Value = busFoodCate.GetValue("where ID= N'" + temp + "'", 1);
                 dgvFood.Rows.Add(dvr);
             }
         }
@@ -799,7 +834,7 @@ namespace assignmentOOP
                 etFood.Id = txtIDFood.Text;
                 etFood.Name = txtFood.Text;
                 etFood.Price = (float)Convert.ToDouble(txtPrice.Text);
-                etFood.Cate = cmbCat.SelectedValue+"";
+                etFood.Cate = cmbCat.SelectedValue + "";
                 busFood.AddFood(etFood);
                 ShowFood("");
             }
@@ -837,6 +872,189 @@ namespace assignmentOOP
                 ShowFood("where Name=N'" + etFood.Name + "'");
             }
         }
-    }
-    
+
+        //=================================CODE==============================================
+
+        EC_CODE etCode = new EC_CODE();
+        BUS_Code busCode = new BUS_Code();
+        bool FlagAddCode;
+        void ShowCode()
+        {
+            dgvCode.DataSource = busCode.CreateData("");
+        }
+        void setNullCode()
+        {
+            txtIdCode.Text = "";
+            txtNameCode.Text = "";
+            txtAmountCode.Text = "";
+        }
+        void LockCodeControl()
+        {
+            setNullCode();
+            txtIdCode.Enabled = false;
+            txtAmountCode.Enabled = false;
+            txtNameCode.Enabled = false;
+            rdValid.Checked = true;
+            btnDeleteCode.Enabled = false;
+            btnSaveCode.Enabled = true;
+            btnAddCode.Enabled = true;
+            btnEditCode.Enabled = false;
+        }
+        void UnlockCodeControl()
+        {
+            txtIdCode.Enabled = false;
+            txtAmountCode.Enabled = true;
+            txtNameCode.Enabled = true;
+            rdValid.Checked = true;
+            btnDeleteCode.Enabled = true;
+            btnSaveCode.Enabled = true;
+            btnAddCode.Enabled = true;
+            btnEditCode.Enabled = true;
+        }
+        string SetIdCode()
+        {
+            DataTable dt = busCode.CreateData("");
+            if (dt.Rows.Count < 1) return "CO000";
+            else
+            {
+                string s = Convert.ToString(dt.Rows[dt.Rows.Count - 1][0]);
+                int id = Convert.ToInt32(s.Remove(0, 2)) + 1;
+                if (id < 10) return "CO00" + id;
+                else if (id < 100) return "CO0";
+                else return "CO" + id;
+            }
+        }
+        private void dgvCode_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                UnlockCodeControl();
+                DataGridViewRow dgv = dgvCode.Rows[e.RowIndex];
+                txtIdCode.Text = dgv.Cells[0].Value + "";
+                txtNameCode.Text = dgv.Cells[1].Value + "";
+                txtAmountCode.Text = dgv.Cells[2].Value + "";
+                if (dgv.Cells[3].Value + "" == "1")
+                {
+                    rdValid.Checked = true;
+                }
+                else
+                {
+                    rdInvalid.Checked = true;
+                }
+            }
+            catch{ }
+        }
+
+        private void btnAddCode_Click(object sender, EventArgs e)
+        {
+            UnlockCodeControl();
+            setNullCode();
+            txtIdCode.Text = SetIdCode();
+            FlagAddCode = true;
+        }
+
+        private void btnEditCode_Click(object sender, EventArgs e)
+        {
+            FlagAddCode = false;
+        }
+
+        private void btnSaveCode_Click(object sender, EventArgs e)
+        {
+            etCode.ID = txtIdCode.Text;
+            etCode.NameCode = txtNameCode.Text;
+            etCode.Amount = int.Parse(txtAmountCode.Text);
+            if (rdValid.Checked == true)
+            {
+                etCode.Status = 1;
+            }
+            else
+            {
+                etCode.Status = 0;
+            }
+            if (FlagAddCode)
+            {
+                busCode.AddCode(etCode);
+            }
+            else
+            {
+                busCode.UpdateCode(etCode);
+            }
+            ShowCode();
+            LockCodeControl();
+        }
+
+        private void btnDeleteCode_Click(object sender, EventArgs e)
+        {
+            etCode.ID = txtIdCode.Text;
+            busCode.DeleteCode(etCode);
+            ShowCode();
+            setNullCode();
+            LockCodeControl();
+        }
+        //==============================Statistic=================================================
+        BUS_BILL busBill = new BUS_BILL();
+        EC_Bill etBill = new EC_Bill();
+        void ShowStatistic(string condition)
+        {
+            DataTable dt = busBill.CreateData(condition);
+            dt.Columns.RemoveAt(3);
+            dt.Columns.RemoveAt(3);
+            dgvStatistic.DataSource = dt;
+        }
+
+        private void btnStatistic_Click(object sender, EventArgs e)
+        {
+            if (cbStatistic.SelectedIndex == 0)
+            {
+                DateTime dt = DateTime.Now;
+                DateTime dt1 = dt.AddDays(-1);
+                string s = dt.ToString("MM-dd-yyyy HH:mm:ss");
+                string s1 = dt1.ToString("MM-dd-yyyy HH:mm:ss");
+                ShowStatistic("where DateBill between N'" + s1 + "' and N'" + s + "'");
+            }
+            else if (cbStatistic.SelectedIndex == 1)
+            {
+                DateTime dt = DateTime.Now;
+                DateTime dt1 = dt.AddDays(-7);
+                string s = dt.ToString("MM-dd-yyyy HH:mm:ss");
+                string s1 = dt1.ToString("MM-dd-yyyy HH:mm:ss");
+                ShowStatistic("where DateBill between N'" + s1 + "' and N'" + s + "'");
+            }
+            else if (cbStatistic.SelectedIndex == 2)
+            {
+                DateTime dt = DateTime.Now;
+                DateTime dt1 = dt.AddDays(-30);
+                string s = dt.ToString("MM-dd-yyyy HH:mm:ss");
+                MessageBox.Show(s + "");
+                string s1 = dt1.ToString("MM-dd-yyyy HH:mm:ss");
+                ShowStatistic("where DateBill between N'" + s1 + "' and N'" + s + "'");
+            }
+            else if (cbStatistic.SelectedIndex == 3)
+            {
+                string s = dtpStatistic1.Value.ToString("MM-dd-yyyy") + " 00:00:00";
+                string s1 = dtpStatistic2.Value.ToString("MM-dd-yyyy") + " 00:00:00";
+                MessageBox.Show(s + "");
+                ShowStatistic("where DateBill between N'" + s + "' and N'" + s1 + "'");
+            }
+            double revenue = RevenueSum();
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+            decimal value = decimal.Parse(Convert.ToString(revenue), System.Globalization.NumberStyles.AllowThousands);
+            txtRevenue.Text = String.Format(culture, "{0:N0}", value);
+            txtAmountBill.Text = dgvStatistic.Rows.Count-1+"";
+        }
+        double RevenueSum()
+        {
+            double price = 0;
+            for (int i = 0; i < dgvStatistic.Rows.Count; i++)
+            {
+                DataGridViewRow dvr = dgvStatistic.Rows[i];
+                price +=  Convert.ToDouble(dvr.Cells[3].Value);
+            }
+            return price;
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }  
 }

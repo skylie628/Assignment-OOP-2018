@@ -30,6 +30,7 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel = new System.Windows.Forms.Panel();
+            this.cbDiscount = new System.Windows.Forms.ComboBox();
             this.txtSeat = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbMember = new System.Windows.Forms.CheckBox();
@@ -37,8 +38,6 @@
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PRICE = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnbook = new System.Windows.Forms.Button();
-            this.btnChange = new System.Windows.Forms.Button();
-            this.btnCombine = new System.Windows.Forms.Button();
             this.btnprintfood = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -71,24 +70,24 @@
             // 
             // panel1
             // 
+            this.panel1.AutoSize = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(829, 25);
+            this.panel1.Size = new System.Drawing.Size(829, 0);
             this.panel1.TabIndex = 0;
             // 
             // panel
             // 
             this.panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel.Controls.Add(this.cbDiscount);
             this.panel.Controls.Add(this.txtSeat);
             this.panel.Controls.Add(this.label1);
             this.panel.Controls.Add(this.cbMember);
             this.panel.Controls.Add(this.dgvFood);
             this.panel.Controls.Add(this.btnbook);
-            this.panel.Controls.Add(this.btnChange);
-            this.panel.Controls.Add(this.btnCombine);
             this.panel.Controls.Add(this.btnprintfood);
             this.panel.Controls.Add(this.label8);
             this.panel.Controls.Add(this.label7);
@@ -110,11 +109,23 @@
             this.panel.Controls.Add(this.cmFoodCate);
             this.panel.Controls.Add(this.dgvFoodSelected);
             this.panel.Controls.Add(this.flpSeat);
-            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel.Location = new System.Drawing.Point(0, 25);
+            this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(829, 407);
+            this.panel.Size = new System.Drawing.Size(829, 432);
             this.panel.TabIndex = 1;
+            this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
+            // 
+            // cbDiscount
+            // 
+            this.cbDiscount.FormattingEnabled = true;
+            this.cbDiscount.Items.AddRange(new object[] {
+            "Không",
+            "Nhập Mã"});
+            this.cbDiscount.Location = new System.Drawing.Point(591, 337);
+            this.cbDiscount.Name = "cbDiscount";
+            this.cbDiscount.Size = new System.Drawing.Size(50, 21);
+            this.cbDiscount.TabIndex = 34;
+            this.cbDiscount.SelectedIndexChanged += new System.EventHandler(this.cbDiscount_SelectedIndexChanged);
             // 
             // txtSeat
             // 
@@ -176,9 +187,9 @@
             // btnbook
             // 
             this.btnbook.AllowDrop = true;
-            this.btnbook.Location = new System.Drawing.Point(11, 359);
+            this.btnbook.Location = new System.Drawing.Point(11, 368);
             this.btnbook.Name = "btnbook";
-            this.btnbook.Size = new System.Drawing.Size(75, 23);
+            this.btnbook.Size = new System.Drawing.Size(240, 23);
             this.btnbook.TabIndex = 29;
             this.btnbook.Text = "Đặt bàn";
             this.btnbook.UseVisualStyleBackColor = true;
@@ -186,28 +197,6 @@
             this.btnbook.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnbook_DragDrop);
             this.btnbook.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnbook_DragEnter);
             this.btnbook.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnbook_MouseDown);
-            // 
-            // btnChange
-            // 
-            this.btnChange.Location = new System.Drawing.Point(11, 337);
-            this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(75, 23);
-            this.btnChange.TabIndex = 28;
-            this.btnChange.Text = "Chuyển bàn";
-            this.btnChange.UseVisualStyleBackColor = true;
-            // 
-            // btnCombine
-            // 
-            this.btnCombine.AllowDrop = true;
-            this.btnCombine.Location = new System.Drawing.Point(11, 313);
-            this.btnCombine.Name = "btnCombine";
-            this.btnCombine.Size = new System.Drawing.Size(75, 23);
-            this.btnCombine.TabIndex = 27;
-            this.btnCombine.Text = "Gộp bàn";
-            this.btnCombine.UseVisualStyleBackColor = true;
-            this.btnCombine.DragDrop += new System.Windows.Forms.DragEventHandler(this.btnCombine_DragDrop);
-            this.btnCombine.DragEnter += new System.Windows.Forms.DragEventHandler(this.btnCombine_DragEnter);
-            this.btnCombine.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnCombine_MouseUp);
             // 
             // btnprintfood
             // 
@@ -217,6 +206,7 @@
             this.btnprintfood.TabIndex = 26;
             this.btnprintfood.Text = "In chế biến";
             this.btnprintfood.UseVisualStyleBackColor = true;
+            this.btnprintfood.Click += new System.EventHandler(this.btnprintfood_Click);
             // 
             // label8
             // 
@@ -269,9 +259,9 @@
             // 
             // txtTotalAmont
             // 
-            this.txtTotalAmont.Location = new System.Drawing.Point(508, 371);
+            this.txtTotalAmont.Location = new System.Drawing.Point(485, 371);
             this.txtTotalAmont.Name = "txtTotalAmont";
-            this.txtTotalAmont.Size = new System.Drawing.Size(125, 20);
+            this.txtTotalAmont.Size = new System.Drawing.Size(156, 20);
             this.txtTotalAmont.TabIndex = 20;
             // 
             // label6
@@ -294,17 +284,18 @@
             // 
             // txtDiscount
             // 
-            this.txtDiscount.Location = new System.Drawing.Point(508, 337);
+            this.txtDiscount.Location = new System.Drawing.Point(485, 337);
             this.txtDiscount.Name = "txtDiscount";
-            this.txtDiscount.Size = new System.Drawing.Size(125, 20);
+            this.txtDiscount.Size = new System.Drawing.Size(100, 20);
             this.txtDiscount.TabIndex = 17;
+            this.txtDiscount.TextChanged += new System.EventHandler(this.txtDiscount_TextChanged);
             // 
             // txtSum
             // 
             this.txtSum.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSum.Location = new System.Drawing.Point(508, 305);
+            this.txtSum.Location = new System.Drawing.Point(485, 305);
             this.txtSum.Name = "txtSum";
-            this.txtSum.Size = new System.Drawing.Size(125, 20);
+            this.txtSum.Size = new System.Drawing.Size(156, 20);
             this.txtSum.TabIndex = 16;
             this.txtSum.Text = "0";
             // 
@@ -421,8 +412,9 @@
             this.flpSeat.Cursor = System.Windows.Forms.Cursors.Hand;
             this.flpSeat.Location = new System.Drawing.Point(11, 13);
             this.flpSeat.Name = "flpSeat";
-            this.flpSeat.Size = new System.Drawing.Size(240, 285);
+            this.flpSeat.Size = new System.Drawing.Size(240, 336);
             this.flpSeat.TabIndex = 1;
+            this.flpSeat.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSeat_Paint);
             // 
             // frmStaff
             // 
@@ -431,7 +423,7 @@
             this.ClientSize = new System.Drawing.Size(829, 432);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmStaff";
             this.Load += new System.EventHandler(this.frmStaff_Load);
@@ -440,6 +432,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvFood)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFoodSelected)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -468,8 +461,6 @@
         private System.Windows.Forms.TextBox txtSum;
         private System.Windows.Forms.Label lbSum;
         private System.Windows.Forms.Button btnbook;
-        private System.Windows.Forms.Button btnChange;
-        private System.Windows.Forms.Button btnCombine;
         private System.Windows.Forms.Button btnprintfood;
         private System.Windows.Forms.DataGridView dgvFood;
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
@@ -481,5 +472,6 @@
         private System.Windows.Forms.CheckBox cbMember;
         private System.Windows.Forms.TextBox txtSeat;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbDiscount;
     }
 }
