@@ -16,3 +16,25 @@ C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CopyComplete
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmAdmin.resources
 C:\Users\skylie\Documents\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmStaff.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csprojAssemblyReference.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmAdmin.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmStaff.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.Properties.Resources.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.GenerateResource.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CoreCompileInputs.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.exe
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.exe.config
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.exe
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\assignmentOOP.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantBus.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantDAL.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantBus.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantDAL.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\bin\Debug\RestaurantEntity.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmLogin.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.csproj.CopyComplete
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmCreateCustomerAccount.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.Information.resources
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\assignmentOOP\obj\Debug\assignmentOOP.frmLoginStaff.resources

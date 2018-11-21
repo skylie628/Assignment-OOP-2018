@@ -13,7 +13,7 @@ namespace RestaurantDAL
         public void MoKetNoi()
         {
             if (KetNoiDB.connect == null)
-                KetNoiDB.connect = new SqlConnection("Data Source = DESKTOP-Q9KMPT9; Database = DATA; Integrated Security = True ");
+                KetNoiDB.connect = new SqlConnection("Data Source=DESKTOP-EP5NS0J;Initial Catalog=DATA;Integrated Security=True");
             if (KetNoiDB.connect.State != ConnectionState.Open)
                 KetNoiDB.connect.Open();
 

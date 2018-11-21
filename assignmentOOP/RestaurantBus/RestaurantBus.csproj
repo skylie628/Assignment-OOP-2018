@@ -57,6 +57,7 @@
     <Compile Include="BUS_Customer.cs" />
     <Compile Include="BUS_Food.cs" />
     <Compile Include="BUS_FoodCate.cs" />
+    <Compile Include="BUS_Login.cs" />
     <Compile Include="BUS_Staff.cs" />
     <Compile Include="BUS_TableFood.cs" />
     <Compile Include="Class1.cs" />

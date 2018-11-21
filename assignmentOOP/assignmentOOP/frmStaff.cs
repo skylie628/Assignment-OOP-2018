@@ -25,7 +25,7 @@ namespace assignmentOOP
             this.btnbook.DragDrop += new
            System.Windows.Forms.DragEventHandler(this.btnbook_DragDrop);
         }
-        string strConn = "Data Source = DESKTOP-Q9KMPT9; Database = DATA; Integrated Security = True ";
+        string strConn = "Data Source=DESKTOP-EP5NS0J;Initial Catalog=DATA;Integrated Security=True";
         SqlConnection conn = null;
         EC_TableFood etTable = new EC_TableFood();
         BUS_TableFood busTable = new BUS_TableFood();
@@ -677,5 +677,138 @@ namespace assignmentOOP
             }
         }
 
+        private void panel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvFood_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNote_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbnumber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTotalAmont_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSum_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbSum_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbSeat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtp_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbdate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvFoodSelected_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void flpSeat_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnInfomation_Click(object sender, EventArgs e)
+        {
+            frmLoginStaff login = new frmLoginStaff();
+            login.Show();
+        }
+
+        private void btnCreateCusTomerAcount_Click(object sender, EventArgs e)
+        {
+
+            frmCreateCustomerAccount account = new frmCreateCustomerAccount();
+            account.Show();
+        }
+
+        private void panel3_Paint_2(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnCreateCusTomerAcount_MouseHover(object sender, EventArgs e)
+        {
+            btnCreateCusTomerAcount.BackColor = Color.FromArgb(1, 60, 60, 60);
+            btnCreateCusTomerAcount.ForeColor = Color.FromArgb(1,100, 100, 100);
+        }
+
+        private void btnCreateCusTomerAcount_MouseLeave(object sender, EventArgs e)
+        {
+            btnCreateCusTomerAcount.ForeColor = Color.FromArgb(1, 255, 255, 255);
+        }
     }
 }

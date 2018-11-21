@@ -20,6 +20,11 @@ namespace RestaurantBus
         {
             sql.UpdateStaff(et);
         }
+        public void UpdateAllStaff(EC_Staff et)
+        {
+            sql.UpdateAllStaff(et);
+        }
+
         public void DeleteStaff(EC_Staff et)
         {
             sql.DeleteStaff(et);

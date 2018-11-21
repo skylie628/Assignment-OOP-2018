@@ -7,3 +7,12 @@ C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.cs
 C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.dll
 C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.pdb
 C:\Users\skylie\Documents\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csprojAssemblyReference.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantDAL.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantDAL.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantEntity.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\bin\Debug\RestaurantEntity.pdb
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csprojAssemblyReference.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csproj.CoreCompileInputs.cache
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.csproj.CopyComplete
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.dll
+C:\Users\An Nguyen\source\repos\Assignment-OOP-20186\assignmentOOP\RestaurantDAL\obj\Debug\RestaurantDAL.pdb

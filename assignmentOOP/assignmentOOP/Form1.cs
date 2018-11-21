@@ -21,7 +21,7 @@ namespace assignmentOOP
 
             InitializeComponent();
         }
-        string strConn = "Data Source = DESKTOP-Q9KMPT9; Database = DATA; Integrated Security = True ";
+        string strConn = "Data Source=DESKTOP-EP5NS0J;Initial Catalog=DATA;Integrated Security=True";
         SqlConnection conn = null;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -406,11 +406,6 @@ namespace assignmentOOP
                 MessageBox.Show("Lỗi ABCXYZ");
             }
         }
-
-        private void splitContainer4_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         //===========================================================================//
         EC_Customer etCustomer = new EC_Customer();
         BUS_Customer busCustomer = new BUS_Customer();
@@ -688,7 +683,6 @@ namespace assignmentOOP
 
         private void btnEditStaff_Click(object sender, EventArgs e)
         {
-
             AddStaffFlag = false;
             btnCreateStaff.Enabled = false;
             btnDeleteStaff.Enabled = false;
@@ -1055,6 +1049,26 @@ namespace assignmentOOP
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cmbSearchCustomer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMemberSearch_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }  
 }

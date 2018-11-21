@@ -19,6 +19,10 @@ namespace RestaurantDAL
         {
             cn.ImplementSQL("UPDATE STAFF  SET  Name =N'"+et.Name+"', DateOfBirth =N'"+et.DOB+"', Sex =N'"+et.Sex+"', PhoneNumber = "+et.Phone+" where ID=N'"+et.Id+"'");
         }
+        public void UpdateAllStaff(EC_Staff et)
+        {
+            cn.ImplementSQL("UPDATE STAFF  SET  Name =N'" + et.Name + "', DateOfBirth =N'" + et.DOB + "', Sex =N'" + et.Sex + "', Username =N'"+et.UserName+"',Password = N'"+et.Password+"',PhoneNumber = " + et.Phone + " where ID=N'" + et.Id + "'");
+        }
         public void DeleteStaff(EC_Staff et)
         {
             cn.ImplementSQL(@"DELETE FROM STAFF Where Id=N'" + et.Id+"'");
